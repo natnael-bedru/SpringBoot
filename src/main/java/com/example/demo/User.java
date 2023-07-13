@@ -1,8 +1,9 @@
 package com.example.demo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,17 +11,22 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
+//@JsonIgnoreProperties(value = {"order"})
 @Table(name="_user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     @Column(name= "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
+    @JsonProperty("name")
     @Column(name= "user_name", nullable = false)
     private String name;
 
+    //@NonNull
     @OneToMany(mappedBy = "_user", cascade = CascadeType.ALL)
     private List<Order> orders;
 

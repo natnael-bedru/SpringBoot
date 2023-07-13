@@ -14,6 +14,8 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
+        String test = String.valueOf(user);
+        String test2 = String.valueOf(userService.createUser(user));
         return userService.createUser(user);
     }
 
