@@ -27,6 +27,7 @@ public class OrderController {
 @PostMapping(path = "{user_id}")
 public ResponseEntity<Order> createOrder(@PathVariable("user_id") Long id, @RequestBody Order newOrder) {
     User user = userService.getUserById(id);
+    String test;
     if (user == null) {
         return ResponseEntity.notFound().build(); // Return 404 Not Found status
     } else {
@@ -36,9 +37,6 @@ public ResponseEntity<Order> createOrder(@PathVariable("user_id") Long id, @Requ
         return ResponseEntity.ok(createdOrder); // Return 200 OK status with the created Order object
     }
 }
-
-
-
 
     @GetMapping
     public List<Order> getAllOrders() {

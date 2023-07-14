@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,10 +13,12 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
+//@AllArgsConstructor
 //@JsonIgnoreProperties(value = {"order"})
 @Table(name="_user")
 public class User {
     @Id
+    @JsonIgnore
     @JsonProperty("id")
     @Column(name= "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,7 @@ public class User {
     private String name;
 
     //@NonNull
+    @JsonIgnore
     @OneToMany(mappedBy = "_user", cascade = CascadeType.ALL)
     private List<Order> orders;
 
