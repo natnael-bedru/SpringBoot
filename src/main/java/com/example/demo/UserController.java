@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -12,11 +13,16 @@ public class UserController {
         this.userService = userService;
     }
 
+//    @PostMapping
+//    public User createUser(@RequestBody User user) {
+//        return userService.createUser(user);
+//    }
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        String test = String.valueOf(user);
-        String test2 = String.valueOf(userService.createUser(user));
-        return userService.createUser(user);
+    public ResponseEntity createUser(@JsonArg("name") String user_name) {
+        User user = new User(user_name);
+        userService.createUser(user);
+        return ResponseEntity.ok().body(userService.createUser(user));
+        //return ResponseEntity.ok().body(String.format(String.format("{\"User name \": %s", user_name)));
     }
 
     @GetMapping
