@@ -9,8 +9,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableJpaRepositories
-@EnableSwagger2    // swager nessesary annotations
-@EnableWebMvc      // swager nessesary annotations
+@EnableSwagger2    // swagger necessary annotations
+@EnableWebMvc      // swagger necessary annotations
 public class DemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);

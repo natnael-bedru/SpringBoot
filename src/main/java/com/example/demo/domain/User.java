@@ -1,9 +1,9 @@
-package com.example.demo;
+package com.example.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 
 import javax.persistence.*;
@@ -12,27 +12,39 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
 //@AllArgsConstructor
 //@JsonIgnoreProperties(value = {"order"})
 @Table(name="_user")
 public class User {
     @Id
     @JsonIgnore
-    @JsonProperty("id")
-    @Column(name= "user_id")
+    @JsonProperty("userId")
+    @Column(name= "userId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
-    @JsonProperty("name")
-    @Column(name= "user_name", nullable = false)
-    private String name;
+    @JsonProperty("userName")
+    @Column(name= "userName", nullable = false)
+    private String userName;
+
+    @NonNull
+    @JsonProperty("firstName")
+    @Column(name= "firstName", nullable = false)
+    private String firstName;
+
+    @NonNull
+    @JsonProperty("lastName")
+    @Column(name= "lastName", nullable = false)
+    private String lastName;
 
     //@NonNull
     @JsonIgnore
+    @ToString.Exclude //https://stackoverflow.com/a/63088075/17410605
     @OneToMany(mappedBy = "_user", cascade = CascadeType.ALL)
     private List<Order> orders;
 
+
     // getters and setters done by @Data tag form Lombic dependency
+
 }

@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.service;
 
+import com.example.demo.repository.UserRepository;
+import com.example.demo.domain.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +32,10 @@ public class UserService {
         User existingUser = userRepository.findById(updatedUser.getId())
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
-        existingUser.setName(updatedUser.getName());
+        //existingUser.setName(updatedUser.getName());
+        existingUser.setUserName(updatedUser.getUserName());
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
         // Update other fields as needed
 
         return userRepository.save(existingUser);
@@ -38,5 +43,9 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+    public Long findIdByUserName(String userName) {
+        return userRepository.findUserIdByUserName(userName);
+
     }
 }

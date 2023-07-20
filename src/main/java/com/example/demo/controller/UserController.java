@@ -1,27 +1,48 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.domain.User;
+import com.example.demo.dto.get.UserOrderDTO;
+import com.example.demo.dto.get.UserOrderMapper;
+import com.example.demo.service.UserService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
+    @NonNull
     private final UserService userService;
+    @NonNull
+    private final UserOrderMapper userOrderMapper;
 
+/*
     public UserController(UserService userService) {
         this.userService = userService;
     }
+*/
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        String test = String.valueOf(user);
-        String test2 = String.valueOf(userService.createUser(user));
         return userService.createUser(user);
     }
 
+//    @GetMapping
+//    public List<User> getAllUsers() {
+//        return userService.getAllUsers();
+//    }
+
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    @ResponseBody
+    public List<UserOrderDTO> getUserOrder() {
+        return userService.getAllUsers()
+                .stream()
+                .map(UserOrderMapper::toDto)
+                .collect(toList());
     }
 
     @GetMapping("/{id}")
@@ -34,6 +55,7 @@ public class UserController {
         updatedUser.setId(id);
         return userService.updateUser(updatedUser);
     }
+
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") Long id) {

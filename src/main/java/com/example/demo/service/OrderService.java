@@ -1,9 +1,13 @@
-package com.example.demo;
+package com.example.demo.service;
 
+import com.example.demo.repository.OrderRepository;
+import com.example.demo.domain.Order;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -25,12 +29,23 @@ public class OrderService {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Order not found"));
     }
+    public Optional<List<Order>>  findProductNamesBy_userId(Long user_id) {
+        return orderRepository.findProductNamesBy_userId(user_id);
+    }
+    //Optional<List<Long>> findUserIdsByProductName(String productName);
+    public Optional<List<Long>> findUserIdsByProductName (String productName) {
+        return orderRepository.findUserIdByProductName(productName);
+    }
+
+    public Optional<Long> findIdByProductName(String productName){
+        return Optional.ofNullable(orderRepository.findIdByProductName(productName));
+    }
 
     public Order updateOrder(Order updatedOrder) {
         Order existingOrder = orderRepository.findById(updatedOrder.getId())
                 .orElseThrow(() -> new NoSuchElementException("Order not found"));
 
-        existingOrder.setDate(updatedOrder.getDate());
+        existingOrder.setOrderDate(LocalDate.now());
         // Update other fields as needed
 
         return orderRepository.save(existingOrder);
